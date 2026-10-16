@@ -1,4 +1,6 @@
-// Simple site script for Astréa
+// Simple site script for Astréa with preloader behavior
+
+// set year
 document.getElementById('year').textContent = new Date().getFullYear();
 
 // Placeholder member count — replace with real widget or API if you have one
@@ -12,3 +14,16 @@ if(card){
   card.addEventListener('mouseout', () => card.style.transform='translateY(0)');
   card.style.transition = 'transform 180ms ease';
 }
+
+// Preloader: hide after window load
+window.addEventListener('load', () => {
+  const pre = document.getElementById('preloader');
+  if(!pre) return;
+  // small pause to show the animation nicely
+  setTimeout(() => {
+    pre.classList.add('hidden');
+    pre.setAttribute('aria-hidden','true');
+    // remove from DOM after transition to avoid blocking interactions
+    pre.addEventListener('transitionend', () => pre.remove());
+  }, 450);
+});
